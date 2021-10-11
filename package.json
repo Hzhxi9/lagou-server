@@ -1,0 +1,7 @@
+{
+  "name": "lagou-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "huangzx <huangzhixi@youxin.cloud>",
+  "license": "MIT"
+}
