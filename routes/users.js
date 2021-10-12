@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
+const loginController = require('../controllers/user')
+
 /**登录&&注册 */
-router.post('/login', function(req, res, next) {
-  res.send('respond with a resource');
-});
+router.post('/login', loginController);
 
 module.exports = router;
