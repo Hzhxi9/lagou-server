@@ -17,8 +17,6 @@ module.exports = {
     connection.query(sql, (err, result, field) => {
       if (err) console.log(err)
       console.log(result, '==result==');
-      console.log(field, '==field==');
-
       cb(result)
     });
 
