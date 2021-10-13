@@ -6,6 +6,13 @@ var logger = require('morgan');
 
 var app = express();
 
+
+const mysql = require('./mysql')
+
+mysql.getData((res) => {
+  console.log(res)
+})
+
 const usersRouter = require('./routes/user');
 
 // view engine setup
