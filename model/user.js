@@ -20,7 +20,13 @@ const addUser = async ({ username, password }) => {
   }
 };
 
+const deleteUser = (id) => {
+  const sql = `DELETE FROM user WHERE id=${id}`;
+  return connect('user', sql)
+}
+
 module.exports = {
   getUsers,
   addUser,
+  deleteUser,
 };
