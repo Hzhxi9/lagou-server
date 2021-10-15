@@ -1,25 +1,24 @@
 const mysql = require('mysql');
 
-module.exports = {
-  getData(cb) {
+const connect = (user = 'user', sql, cb) => {
+  return new Promise((resolve, reject) => {
     const connection = mysql.createConnection({
       host: 'localhost',
       port: 3306,
       user: 'root',
       password: 'root123456',
-      database: 'user',
+      database: user,
     });
-
     connection.connect();
-
-    const sql = 'SELECT * FROM user';
-
+    if (!sql) reject('请输入sql语句');
     connection.query(sql, (err, result, field) => {
-      if (err) console.log(err)
-      console.log(result, '==result==');
-      cb(result)
+      if (err) reject(err);
+      else resolve(result);
     });
+    connection.end();
+  });
+};
 
-    connection.end()
-  },
+module.exports = {
+  connect,
 };
