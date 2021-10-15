@@ -1,5 +1,4 @@
-const { getUsers, addUser, deleteUser } = require('../model/user');
-
+const { getUsers, addUser, deleteUser, updateUser } = require('../model/user');
 const { hash } = require('../utils');
 
 const login = async (req, res, next) => {
@@ -33,14 +32,29 @@ const getUsersList = async (req, res, next) => {
 const delUser = async (req, res, next) => {
   try {
     const id = req.query.id;
-    console.log(id)
     await deleteUser(id);
     res.render('success', {
-      data: '删除成功'
+      data: '删除成功',
+    });
+  } catch (error) {
+    console.log(error);
+    res.render('fail', {
+      data: error,
+    });
+  }
+};
+
+const editUser = async (req, res, next) => {
+  try {
+    const { id, username, password } = req.body;
+    const hashPassword = await hash(password);
+    await updateUser({ username, id, password: hashPassword });
+    res.render('success', {
+      data: '修改成功',
     });
   } catch (error) {
     res.render('fail', {
-      data: 'error',
+      data: error,
     });
   }
 };
@@ -48,5 +62,6 @@ const delUser = async (req, res, next) => {
 module.exports = {
   login,
   getUsersList,
-  delUser
+  delUser,
+  editUser,
 };
