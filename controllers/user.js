@@ -2,6 +2,11 @@ const { getUsers, addUser, deleteUser, updateUser } = require('../model/user');
 const { hash } = require('../utils');
 
 /**
+ * controllers模块
+ * 负责处理业务
+ **/
+
+/**
  * 登录注册
  * @param {*} req
  * @param {*} res
@@ -10,7 +15,11 @@ const { hash } = require('../utils');
 const login = async (req, res, next) => {
   try {
     /**设置请求头 */
-    res.set('content-type', 'application/json;chart=utf-8')
+    res.set('content-type', 'application/json;chart=utf-8');
+
+    /**设置cookie */
+    res.cookie('code', 1, { maxAge: 60 * 1000, httpOnly: true });
+
     const { username, password } = req.body;
     const hashPassword = await hash(password);
     await addUser({ username, password: hashPassword });
@@ -80,7 +89,7 @@ const delUser = async (req, res, next) => {
 const editUser = async (req, res, next) => {
   try {
     /**设置请求头 */
-    res.set('content-type', 'application/json;chart=utf-8')
+    res.set('content-type', 'application/json;chart=utf-8');
     const { id, username, password } = req.body;
     const hashPassword = await hash(password);
     await updateUser({ username, id, password: hashPassword });

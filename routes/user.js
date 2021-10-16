@@ -1,6 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
+/**
+ * 路由模块
+ * 只负责分发和监听请求
+ */
+
 const { login, getUsersList, delUser, editUser } = require('../controllers/user');
 
 /**登录&&注册 */

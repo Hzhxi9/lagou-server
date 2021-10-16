@@ -1,8 +1,13 @@
 const { connect } = require('../mysql');
 
 /**
+ * 数据模块
+ * 负责读取数据，以数据的形式返回给控制器模块
+ */
+
+/**
  * 检查账户
- * @param {username: string, id: number} param
+ * @param {{username: string, id: number}} param
  * @returns
  */
 const checkUser = ({ username, id }) => {
