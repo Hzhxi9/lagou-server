@@ -1,5 +1,12 @@
 const mysql = require('mysql');
 
+/**
+ * 连接数据库
+ * @param {*} user 
+ * @param {*} sql 
+ * @param {*} cb 
+ * @returns 
+ */
 const connect = (user = 'user', sql, cb) => {
   return new Promise((resolve, reject) => {
     const connection = mysql.createConnection({
