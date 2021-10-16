@@ -7,7 +7,7 @@ const mysql = require('mysql');
  * @param {*} cb 
  * @returns 
  */
-const connect = (user = 'user', sql, cb) => {
+const connect = (user: string = 'user', sql: string, cb: any) => {
   return new Promise((resolve, reject) => {
     const connection = mysql.createConnection({
       host: 'localhost',
@@ -18,7 +18,7 @@ const connect = (user = 'user', sql, cb) => {
     });
     connection.connect();
     if (!sql) reject('请输入sql语句');
-    connection.query(sql, (err, result, field) => {
+    connection.query(sql, (err: any, result: unknown, field: any) => {
       if (err) reject(err);
       else resolve(result);
     });

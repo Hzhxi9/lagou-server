@@ -1,4 +1,4 @@
-const { getUsers, addUser, deleteUser, updateUser } = require('../model/user');
+const userModel = require('../model/user');
 const { hash } = require('../utils');
 
 /**
@@ -12,7 +12,7 @@ const { hash } = require('../utils');
  * @param {*} res
  * @param {*} next
  */
-const login = async (req, res, next) => {
+const login = async (req: any, res: any, next: any) => {
   try {
     /**设置请求头 */
     res.set('content-type', 'application/json;chart=utf-8');
@@ -22,7 +22,7 @@ const login = async (req, res, next) => {
 
     const { username, password } = req.body;
     const hashPassword = await hash(password);
-    await addUser({ username, password: hashPassword });
+    await userModel.addUser({ username, password: hashPassword });
     res.render('success', {
       data: '注册成功',
     });
@@ -39,9 +39,10 @@ const login = async (req, res, next) => {
  * @param {*} res
  * @param {*} next
  */
-const getUsersList = async (req, res, next) => {
+const getUsersList = async (req: any, res: any, next: any) => {
   try {
-    const result = await getUsers();
+    const result = await userModel.getUsers();
+    console.log(result,'==')
     res.render('success', {
       data: JSON.stringify(result),
     });
@@ -58,10 +59,10 @@ const getUsersList = async (req, res, next) => {
  * @param {*} res
  * @param {*} next
  */
-const delUser = async (req, res, next) => {
+const delUser = async (req: any, res: any, next: any) => {
   try {
     const id = req.query.id;
-    const result = await deleteUser(id);
+    const result = await userModel.deleteUser(id);
     /**通过受影响行数判断删除是否成功 */
     if (result.affectedRows) {
       res.render('success', {
@@ -86,13 +87,13 @@ const delUser = async (req, res, next) => {
  * @param {*} res
  * @param {*} next
  */
-const editUser = async (req, res, next) => {
+const editUser = async (req: any, res: any, next: any) => {
   try {
     /**设置请求头 */
     res.set('content-type', 'application/json;chart=utf-8');
     const { id, username, password } = req.body;
     const hashPassword = await hash(password);
-    await updateUser({ username, id, password: hashPassword });
+    await userModel.updateUser({ username, id, password: hashPassword });
     res.render('success', {
       data: '修改成功',
     });
