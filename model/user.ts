@@ -11,6 +11,16 @@ interface UserType {
   password?: string;
   id?: number;
 }
+
+/**
+ * 查询总条数
+ * @returns 
+ */
+const selectTotal = () => {
+  const sql = `SELECT count(*) as total FROM user`;
+  return mysqlConnect.connect('user', sql);
+}
+
 /**
  * 检查账户
  * @param {{username: string, id: number}} param
@@ -27,9 +37,28 @@ const checkUser = ({ username, id }: UserType) => {
  * 获取用户列表
  * @returns
  */
-const getUsers = () => {
-  const sql = 'SELECT * FROM user';
-  return mysqlConnect.connect('user', sql);
+const getUsers = async ({ page, size }: { page: number, size: number }) => {
+  /**公式: (当前页数 - 1) * 每页条数 */
+  const offset = (page - 1) * size;
+  
+  /**总条数 */
+  const data = await selectTotal();
+  const total = data[0].total;
+
+  /**总页数 */
+  const pages = Math.ceil(total / size)
+
+  /**
+   * limit var1, var
+   * var1: 起始点, 查询结果的索引, 从0开始, 代表第一条数据
+   * var2: 长度
+   */
+  const sql = `SELECT * FROM user LIMIT ${offset}, ${size}`;
+  return {
+    pages,
+    total,
+    data: await mysqlConnect.connect('user', sql)
+  };
 };
 
 /**
