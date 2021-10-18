@@ -7,8 +7,8 @@ const cors = require('cors');
 
 const app = express();
 
-
-const usersRouter = require('./routes/user');
+const usersRouters = require('./routes/user');
+const uploadRouters = require('./routes/upload')
 
 /**
  * 配置模版引擎需要在注册路由中间件之前
@@ -41,7 +41,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors())
 
 /**注册user接口 */
-app.use('/api/user', usersRouter);
+app.use('/api/user', usersRouters);
+
+/**注册上传文件 */
+app.use('/api', uploadRouters)
 
 // catch 404 and forward to error handler
 app.use(function (req: any, res: any, next: (arg0: any) => void) {

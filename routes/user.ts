@@ -1,5 +1,4 @@
-const expressRouter = require('express');
-const router = expressRouter.Router();
+const userRouter = require('express').Router();
 
 /**
  * 路由模块
@@ -10,15 +9,15 @@ const userControllers = require('../controllers/user');
 
 
 /**登录&&注册 */
-router.post('/login', userControllers.login);
+userRouter.post('/login', userControllers.login);
 
 /**获取用户列表 */
-router.get('/list', userControllers.getUsersList);
+userRouter.get('/list', userControllers.getUsersList);
 
 /**删除用户 */
-router.delete('/delete', userControllers.delUser)
+userRouter.delete('/delete', userControllers.delUser)
 
 /**更新用户 */
-router.patch('/edit', userControllers.editUser)
+userRouter.patch('/edit', userControllers.editUser)
 
-module.exports = router;
+module.exports = userRouter;
