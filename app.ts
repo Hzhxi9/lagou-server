@@ -9,6 +9,7 @@ const app = express();
 
 const usersRouters = require('./routes/user');
 const uploadRouters = require('./routes/upload')
+const articleRouters = require('./routes/article')
 
 /**
  * 配置模版引擎需要在注册路由中间件之前
@@ -42,6 +43,10 @@ app.use(cors())
 
 /**注册user接口 */
 app.use('/api/user', usersRouters);
+
+
+/**注册article接口 */
+app.use('/api/article', articleRouters);
 
 /**注册上传文件 */
 app.use('/api', uploadRouters)
