@@ -1,8 +1,8 @@
 const bcrypt = require('bcrypt');
 
-const hash = (password) => {
+const hashFun = (password: string) => {
   return new Promise((resolve, reject) => {
-    bcrypt.hash(password, 10, (err, hash) => {
+    bcrypt.hash(password, 10, (err: any, hash: any) => {
       if (err) {
         reject(err);
         throw new Error('加密失败')
@@ -13,5 +13,5 @@ const hash = (password) => {
 };
 
 module.exports = {
-  hash,
+  hash: hashFun,
 };
