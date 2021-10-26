@@ -53,7 +53,7 @@ const getUsers = async ({ page, size }: { page: number, size: number }) => {
    * var1: 起始点, 查询结果的索引, 从0开始, 代表第一条数据
    * var2: 长度
    */
-  const sql = `SELECT * FROM user LIMIT ${offset}, ${size}`;
+  const sql = `SELECT * FROM user Order by id desc LIMIT ${offset}, ${size}`;
   return {
     pages,
     total,

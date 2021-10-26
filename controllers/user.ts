@@ -15,17 +15,17 @@ const { hash } = require('../utils');
 const login = async (req: any, res: any, next: any) => {
   try {
     /**设置请求头 */
-    res.set('content-type', 'application/json;chart=utf-8');
-
-    /**设置cookie */
-    res.cookie('code', 1, { maxAge: 60 * 1000, httpOnly: true });
+    res.set('content-type', 'application/x-www-form-urlencoded;chart=utf-8');
 
     const { username, password } = req.body;
+
+    console.log(username, password);
+
     const hashPassword = await hash(password);
     await userModel.addUser({ username, password: hashPassword });
-    res.render('success', {
+    res.render('success', JSON.stringify({
       data: '注册成功',
-    });
+    }));
   } catch (error) {
     res.render('fail', {
       data: error,
@@ -41,8 +41,8 @@ const login = async (req: any, res: any, next: any) => {
  */
 const getUsersList = async (req: any, res: any, next: any) => {
   try {
+    res.set('content-type', 'application/json;charset=uft-8')
     const { page, size } = req.query;
-
     const result = await userModel.getUsers({ page: page || 1, size: size || 10 });
     res.render('success', {
       data: JSON.stringify(result),
