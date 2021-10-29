@@ -61,8 +61,9 @@ const getUsersList = async (req: any, res: any, next: any) => {
  * @param {*} next
  */
 const delUser = async (req: any, res: any, next: any) => {
+  // res.set('content-type', 'application/json;charset=uft-8')
   try {
-    const id = req.query.id;
+    const id = req.body.id;
     const result = await userModel.deleteUser(id);
     /**通过受影响行数判断删除是否成功 */
     if (result.affectedRows) {
@@ -70,7 +71,7 @@ const delUser = async (req: any, res: any, next: any) => {
         data: '删除成功',
       });
     } else {
-      res.render('success', {
+      res.render('fail', {
         data: '删除失败',
       });
     }

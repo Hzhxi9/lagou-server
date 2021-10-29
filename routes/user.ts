@@ -12,12 +12,12 @@ const userControllers = require('../controllers/user');
 userRouter.post('/login', userControllers.login);
 
 /**获取用户列表 */
-userRouter.get('/list', userControllers.getUsersList);
+userRouter.get('/', userControllers.getUsersList);
 
 /**删除用户 */
-userRouter.delete('/delete', userControllers.delUser)
+userRouter.delete('/', userControllers.delUser)
 
 /**更新用户 */
-userRouter.patch('/edit', userControllers.editUser)
+userRouter.patch('/', userControllers.editUser)
 
 module.exports = userRouter;
