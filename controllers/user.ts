@@ -45,7 +45,7 @@ const getUsersList = async (req: any, res: any, next: any) => {
     const { page, size } = req.query;
     const result = await userModel.getUsers({ page: page || 1, size: size || 10 });
     res.render('success', {
-      data: JSON.stringify(result),
+      data: JSON.stringify(result)
     });
   } catch (error) {
     res.render('fail', {

@@ -102,6 +102,7 @@ const updateUser = async ({ username, password, id }: UserType) => {
 };
 
 module.exports = {
+  checkUser,
   getUsers,
   addUser,
   deleteUser,

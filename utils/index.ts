@@ -12,6 +12,15 @@ const hashFun = (password: string) => {
   });
 };
 
+const compareFun = (password: string, hash: string) => {
+  return new Promise((resolve, reject) => {
+    bcrypt.compare(password, hash, function (err: any, result: boolean) {
+      resolve(result)
+    })
+  })
+}
+
 module.exports = {
   hash: hashFun,
+  compare: compareFun,
 };

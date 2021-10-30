@@ -4,12 +4,14 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
+const cookieSession = require('cookie-session')
 
 const app = express();
 
 const usersRouters = require('./routes/user');
 const uploadRouters = require('./routes/upload')
 const articleRouters = require('./routes/article')
+const loginRouters = require('./routes/login')
 
 /**
  * 配置模版引擎需要在注册路由中间件之前
@@ -38,6 +40,12 @@ app.use(cookieParser());
 /**处理静态资源 */
 app.use(express.static(path.join(__dirname, 'public')));
 
+/**设置cookie-session */
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1', 'key2']
+}))
+
 /**处理跨域 */
 app.use(cors())
 
@@ -50,6 +58,9 @@ app.use('/api/article', articleRouters);
 
 /**注册上传文件 */
 app.use('/api', uploadRouters)
+
+/**用户登录 */
+app.use('/api', loginRouters)
 
 // catch 404 and forward to error handler
 app.use(function (req: any, res: any, next: (arg0: any) => void) {
