@@ -15,9 +15,9 @@ userRouter.post('/login', userControllers.login);
 userRouter.get('/', middleware.auth, userControllers.getUsersList);
 
 /**删除用户 */
-userRouter.delete('/', userControllers.delUser)
+userRouter.delete('/', middleware.auth, userControllers.delUser)
 
 /**更新用户 */
-userRouter.patch('/', userControllers.editUser)
+userRouter.patch('/', middleware.auth, userControllers.editUser)
 
 module.exports = userRouter;
