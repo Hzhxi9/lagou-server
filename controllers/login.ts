@@ -30,7 +30,7 @@ const logoutController = async (req: any, res: any, next: any) => {
 }
 
 const authController = async (req: any, res: any, next: any) => {
-    // res.set('content-type', 'application/json;chart=utf-8')
+    res.set('Content-Type', 'text/plain')
     try {
         if (req.session.username) res.render('success', { data: JSON.stringify(req.session.username) })
         else res.render('fail', { data: '请登录' })

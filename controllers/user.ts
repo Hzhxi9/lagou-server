@@ -41,7 +41,7 @@ const login = async (req: any, res: any, next: any) => {
  */
 const getUsersList = async (req: any, res: any, next: any) => {
   try {
-    res.set('content-type', 'application/json;charset=uft-8')
+    res.set('content-type', 'application/json;chart=utf-8');
     const { page, size } = req.query;
     const result = await userModel.getUsers({ page: page || 1, size: size || 10 });
     res.render('success', {
