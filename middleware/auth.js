@@ -1,5 +1,5 @@
 /**用户鉴权 中间件 */
-const auth = (req: any, res: any, next: any) => {
+const auth = (req, res, next) => {
     if (req.session.username) {
         console.log('has user')
         next()

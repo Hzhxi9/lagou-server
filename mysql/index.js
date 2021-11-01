@@ -2,12 +2,12 @@ const mysql = require('mysql');
 
 /**
  * 连接数据库
- * @param {*} user 
- * @param {*} sql 
- * @param {*} cb 
- * @returns 
+ * @param {*} user
+ * @param {*} sql
+ * @param {*} cb
+ * @returns
  */
-const connect = (database: string = 'user', sql: string, cb: any) => {
+const connect = (database = 'user', sql, cb) => {
   return new Promise((resolve, reject) => {
     const connection = mysql.createConnection({
       host: 'localhost',
@@ -18,7 +18,7 @@ const connect = (database: string = 'user', sql: string, cb: any) => {
     });
     connection.connect();
     if (!sql) reject('请输入sql语句');
-    connection.query(sql, (err: any, result: unknown, field: any) => {
+    connection.query(sql, (err, result, field) => {
       if (err) reject(err);
       else resolve(result);
     });

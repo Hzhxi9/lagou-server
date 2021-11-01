@@ -1,8 +1,8 @@
 const bcrypt = require('bcrypt');
 
-const hashFun = (password: string) => {
+const hash = (password) => {
   return new Promise((resolve, reject) => {
-    bcrypt.hash(password, 10, (err: any, hash: any) => {
+    bcrypt.hash(password, 10, (err, hash) => {
       if (err) {
         reject(err);
         throw new Error('加密失败')
@@ -12,15 +12,15 @@ const hashFun = (password: string) => {
   });
 };
 
-const compareFun = (password: string, hash: string) => {
+const compare = (password, hash) => {
   return new Promise((resolve, reject) => {
-    bcrypt.compare(password, hash, function (err: any, result: boolean) {
+    bcrypt.compare(password, hash, function (err, result) {
       resolve(result)
     })
   })
 }
 
 module.exports = {
-  hash: hashFun,
-  compare: compareFun,
+  hash,
+  compare,
 };

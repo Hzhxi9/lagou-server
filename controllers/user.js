@@ -1,5 +1,5 @@
-const userModel = require('../model/user');
 const { hash } = require('../utils');
+const { selectTotal, getUsers, addUser, deleteUser, updateUser } = require('../model/user');
 
 /**
  * controllers模块
@@ -12,7 +12,7 @@ const { hash } = require('../utils');
  * @param {*} res
  * @param {*} next
  */
-const login = async (req: any, res: any, next: any) => {
+const register = async (req, res, next) => {
   try {
     /**设置请求头 */
     res.set('content-type', 'application/x-www-form-urlencoded;chart=utf-8');
@@ -22,10 +22,13 @@ const login = async (req: any, res: any, next: any) => {
     console.log(username, password);
 
     const hashPassword = await hash(password);
-    await userModel.addUser({ username, password: hashPassword });
-    res.render('success', JSON.stringify({
-      data: '注册成功',
-    }));
+    await addUser({ username, password: hashPassword });
+    res.render(
+      'success',
+      JSON.stringify({
+        data: '注册成功',
+      })
+    );
   } catch (error) {
     res.render('fail', {
       data: error,
@@ -39,13 +42,13 @@ const login = async (req: any, res: any, next: any) => {
  * @param {*} res
  * @param {*} next
  */
-const getUsersList = async (req: any, res: any, next: any) => {
+const getUsersList = async (req, res, next) => {
   try {
     res.set('content-type', 'application/json;chart=utf-8');
     const { page, size } = req.query;
-    const result = await userModel.getUsers({ page: page || 1, size: size || 10 });
+    const result = await getUsers({ page: page || 1, size: size || 10 });
     res.render('success', {
-      data: JSON.stringify(result)
+      data: JSON.stringify(result),
     });
   } catch (error) {
     res.render('fail', {
@@ -60,11 +63,11 @@ const getUsersList = async (req: any, res: any, next: any) => {
  * @param {*} res
  * @param {*} next
  */
-const delUser = async (req: any, res: any, next: any) => {
+const delUser = async (req, res, next) => {
   // res.set('content-type', 'application/json;charset=uft-8')
   try {
     const id = req.body.id;
-    const result = await userModel.deleteUser(id);
+    const result = await deleteUser(id);
     /**通过受影响行数判断删除是否成功 */
     if (result.affectedRows) {
       res.render('success', {
@@ -89,13 +92,13 @@ const delUser = async (req: any, res: any, next: any) => {
  * @param {*} res
  * @param {*} next
  */
-const editUser = async (req: any, res: any, next: any) => {
+const editUser = async (req, res, next) => {
   try {
     /**设置请求头 */
     res.set('content-type', 'application/json;chart=utf-8');
     const { id, username, password } = req.body;
     const hashPassword = await hash(password);
-    await userModel.updateUser({ username, id, password: hashPassword });
+    await updateUser({ username, id, password: hashPassword });
     res.render('success', {
       data: '修改成功',
     });
@@ -107,7 +110,7 @@ const editUser = async (req: any, res: any, next: any) => {
 };
 
 module.exports = {
-  login,
+  register,
   getUsersList,
   delUser,
   editUser,

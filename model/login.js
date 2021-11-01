@@ -1,11 +1,9 @@
-const mysqlToLogin = require('../mysql');
-const userToModel = require('./user');
-
+const { checkUser } = require('./user');
 const { compare } = require('../utils')
 
 
-const loginModel = async ({ username, password }: { username: string, password: string }) => {
-    const has = await userToModel.checkUser({ username })
+const loginModel = async ({ username, password }) => {
+    const has = await checkUser({ username })
     if (has.length) {
         const { password: pwd } = has[0];
         const checkPwd = await compare(password, pwd)

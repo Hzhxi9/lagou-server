@@ -49,6 +49,20 @@ app.use(cookieSession({
 /**处理跨域 */
 app.use(cors())
 
+app.disable('etag');
+
+app.all('*', function (req, res, next) {
+
+  res.header("Access-Control-Allow-Origin", req.headers.origin);
+  // res.header('Access-Control-Allow-Credentials', true);//告诉客户端可以在HTTP请求中带上Cookie
+  res.header("Access-Control-Allow-Headers", "Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, " +
+    "Last-Modified, Cache-Control, Expires, Content-Type, Content-Language, Cache-Control, X-E4M-With,X_FILENAME");
+  res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+  res.header("X-Powered-By", ' 3.2.1')
+  res.header("Content-Type", "application/json;charset=utf-8");
+  next();
+});
+
 /**注册user接口 */
 app.use('/api/user', usersRouters);
 
@@ -63,12 +77,12 @@ app.use('/api', uploadRouters)
 app.use('/api', loginRouters)
 
 // catch 404 and forward to error handler
-app.use(function (req: any, res: any, next: (arg0: any) => void) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function (err: { message: any; status: any; }, req: { app: { get: (arg0: string) => string; }; }, res: { locals: { message: any; error: any; }; status: (arg0: any) => void; render: (arg0: string) => void; }, next: any) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
